@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Lugar Details:</h1>
+<br/>
+
+<div class="card">
+    <div class="card-header">
+      <h4>{{Lugars}}</h4>
+      <h4></h4>
+    </div>
+    <ul>
+    <div class="card-body">
+      <li><h7 class="card-title">Nombre: {{Lugars.Nombre}}</h7></li>
+      <li><h7 class="card-title">dirección: {{Lugars.dirección}}</h7></li>
+      <li><h7 class="card-title">Website: <a href="{{Lugars.web}}">{{Lugars.web}}</a></h7></li>
+      <li><h7 class="card-title">código_zip: {{Lugars.código_zip}}</h7></li>
+      <li><h7 class="card-title">teléfono: {{Lugars.teléfono}}</h7></li>
+      <li><h7 class="card-title">Email dirección: {{Lugars.email}}</h7></li>
+    </div>
+    </ul>
+    {% if Lugars.imagen %}
+    <img src="{{Lugars.imagen.url}}" width="300" height="200">
+    {% endif %}
+</div>
+<br/>
+
+
+{% endblock %}

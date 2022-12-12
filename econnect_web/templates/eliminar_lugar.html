@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  {% if Lugars.owner == user.id %}
+  <h1>Lugar Details:</h1>
+  <br/>
+
+  <div class="card">
+      <div class="card-header">
+        <h4>Are you sure you want to delete this Lugar? </h4>
+        <h4></h4>
+      </div>
+      <ul>
+      <div class="card-body">
+        <li><h7 class="card-title">Nombre: {{Lugars.Nombre}}</h7></li>
+        <li><h7 class="card-title">dirección: {{Lugars.dirección}}</h7></li>
+        <li><h7 class="card-title">Website: <a href="{{Lugars.web}}">{{Lugars.web}}</a></h7></li>
+        <li><h7 class="card-title">código_zip: {{Lugars.código_zip}}</h7></li>
+        <li><h7 class="card-title">teléfono: {{Lugars.teléfono}}</h7></li>
+        <li><h7 class="card-title">Email dirección: {{Lugars.email}}</h7></li>
+        
+      </div>
+      </ul>
+  </div>
+  <div class="form-group">
+      <form method="POST">
+          {% csrf_token %}
+          <input class="btn btn-primary" type="submit" value="Eliminar">
+      </form>
+  </div>
+  <br/>
+  {% else %}
+  No estás permitido aquí !!!!
+  {% endif %}
+{% endif %}
+
+{% endblock %}

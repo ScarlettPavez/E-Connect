@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <form method="POST" action="searchEvento" class="d-flex" role="search">
+    {% csrf_token %}
+    <input class="form-control me-2" Nombre="searched" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+</div>
+<br/><br/>
+<h1>Eventos</h1>
+<br/>
+{% for Evento in Eventos %}
+
+<div class="card">
+    <div class="card-header">
+      <h4><a href="{% url 'Eventodetail' Evento.id %}"> {{Evento.Nombre}}</a></h4>
+    </div>
+    <ul>
+    <div class="card-body">
+      <li><h7 class="card-title">fecha: {{Evento.Evento_fecha}}</h7></li>
+      {% if Evento.is_past == "Future" %}
+      <li><h7 class="card-title">Days Till Evento: {{Evento.days_till}}</h7></li>
+      {% else %}
+      <li><h7 class="card-title">Evento has already passed</h7></li>
+      {% endif %}
+      <li><h7 class="card-title">Lugar: {{Evento.Lugar}}</h7></li>
+      <li><h7 class="card-title">Website: {{Evento.Lugar.web}}</h7></li>
+      <li><h7 class="card-title">gestor: {{Evento.gestor}}</h7></li>
+      <li><h7 class="card-title">Descripción: {{Evento.Descripción}}</h7></li>
+      <li><h7 class="card-title">Asistentes: 
+        {% for attendee in Evento.Asistentes.all %}
+        {{attendee.primer_Nombre}} {{attendee.apellido_Nombre}}<br/>
+        {% endfor %}</h7></li>
+      
+    </div>
+    </ul>
+    {% if user.is_authenticated %}
+      {% if user.id == Evento.gestor.id %}
+      <div class="card-header">
+        <h4><a class="btw btw-secondary" href="{% url 'editEvento' Evento.id %}">Edit</a></h4>
+      </div>
+      {% endif %}
+    {% endif %}
+</div>
+<br/>
+{% endfor %}
+
+{% endblock %}

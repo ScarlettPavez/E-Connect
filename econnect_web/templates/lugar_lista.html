@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+<h1>Lista de lugares </h1>
+<table class="table table-striped table-hover table-bordered">
+    {% for Lugar in Lugars %}
+    <tr>
+        <td><a href="{% url 'Lugardetail' Lugar.id %}"><h5>{{Lugar.Nombre}}</h5></a></td>
+        {% if user.is_authenticated %}
+            {% if Lugar.owner == user.id %}
+            <td align="right"><a class="btn btn-outline-secondary" href="{% url 'upfechaLugar' Lugar.id %}">Editar información</a></td>
+            <td><a class="btn btn-outline-secondary" href="{% url 'deleteLugar' Lugar.id %}">Eliminar</a></td>
+            {% endif %}
+            <td><a class="btn btn-outline-secondary" href="{% url 'EventoLugarcategory' Lugar.id %}">Lista de Evento</a></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+</center>
+
+<hr><br/>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">   
+        {% if Lugars.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo primer</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{Lugars.previous_page_number}}">Previous</a></li>
+
+        {% endif %}
+
+        {% for i in nums %}
+        <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+
+        {% endfor %}
+
+        {% if Lugars.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{Lugars.next_page_number}}">Next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{Lugars.paginator.num_pages}}">apellido &raquo</a></li>
+
+        {% endif %}
+    </ul>
+</nav>
+
+{% endblock %}
